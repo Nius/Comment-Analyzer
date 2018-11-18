@@ -1,7 +1,8 @@
 # Comment-Analyzer
-Performs simple word-count analysis on bulk reservation commentary data, provided a .CSV-formatted list of comments.
+Performs simple word-count analysis on bulk reservation commentary data, provided a .CSV-formatted list of comments. This is designed for use in context of the hotel industry, but could really be used for any list of words. See the section about the input file below.
 
 **How to Use**
+
 This is a standalone program and requires no setup aside from modifying its configuration file.
 1. Place the executable .JAR file in a directory where it can read and write files.
 
@@ -17,5 +18,36 @@ This is a standalone program and requires no setup aside from modifying its conf
 
 5. After completing execution the results file contains all of the program output.
 
+**Input File**
+
+This program reads data from a single input file, specified by the `#SOURCE` directive in the configuration file. The data file should be in .CSV format, with any number of rows and columns. For each type of comment to be analyzed the comment text should occupy its own column, and if there are author names for these comments they should occupy a separate column. Multiple types of comments can be present in the data file, but the relationship between comment types and columns must be one-to-one.
+
+Not every cell in every row needs to be occupied. For example, a data file with 200 comments in the second column but only 15 comments in the first column will have 185 rows with empty first columns. This is okay; the analyzer will simply ignore empty cells.
+
+For example, consider the following simple .CSV data:  
+`This guest is checking in after midnight.`  
+`Settle room+tax to VI0000.`  
+`"This guest is clearly crazy, so be careful."`  
+This is a one-column input with three comments, one on each line. A `#TYPE` directive for this file might look like this:  
+`#TYPE Reservation, 0`  
+
+If there were authors for these comments it might look like this:  
+`This guest is checking in after midnight.,C. Spock`  
+`Settle room+tax to VI0000.,C. Chapel`  
+`"This guest is clearly crazy, so be careful.",L. McCoy`  
+Here the first column contains the comment text while the second column contains the authors for the first columns' comments. This could be configured thusly:  
+`#TYPE Front Office, 0, 1`
+
+This is an example of a file with several comment types:  
+`Req extra pillows,Obtain guest card for incidentals,H. Seldon,This guy's dog is so cute!`  
+`"Late arrival, not gtd",,R. D. Olivaw,Complimentary suite upgrade.`  
+`,,J. Priss,Guest was moving extremely fast.`  
+`Neg rate,Near elevator,,`  
+This has four columns, some of which are empty on certain rows. This might be configured like so:  
+`#TYPE CRS, 0`  
+`#TYPE Reservation, 1`  
+`#TYPE Front Office, 3, 2`  
+
 **Troubleshooting**
+
 If the program encounters a problem during execution it will attempt to write an error message to the results file. If for some reason the error file is empty or will not materialize then try running the program in a console environment. Error messages are printed to the system console as well as to file, and if there are issues writing the results file a complete stack trace is printed to the system console.

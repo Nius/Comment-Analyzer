@@ -1,5 +1,5 @@
 # Comment-Analyzer
-Performs simple word-count analysis on bulk reservation commentary data, provided a .CSV-formatted list of comments. This is designed for use in context of the hotel industry, but could really be used for any list of words. See the section about the input file below.
+Performs simple word-count analysis on bulk reservation commentary data, provided a .CSV-formatted list of comments. This is designed for use in context of the hotel industry but could be used for any list of words or texts.
 
 **How to Use**
 
@@ -12,7 +12,7 @@ This is a standalone program and requires no setup aside from modifying its conf
 
 2. Execute the .JAR. This will spawn a file called `config.cfg` which is human-readable.
 
-3. Open and edit the configuration file. The auto-generated file contains detailed instructions on how to use its various directives. At minimum your config file must contain a `#SOURCE` directive and at least one `#TYPE` directive. You may include other directive and notes as you see fit.
+3. Open and edit the configuration file. The auto-generated file contains detailed instructions on how to use its various directives. At minimum your config file must contain a `#SOURCE` directive and at least one `#TYPE` directive. You may include other directives and notes as you see fit.
 
 4. Execute the .JAR. During computation the program will spawn a file called `results.txt`. Beware that this file is written progressively as the input data is processed. Allow sufficient time for the program to finish execution before opening the results file. Each time the program is executed this file is overwritten.
 
@@ -36,7 +36,7 @@ If there were authors for these comments it might look like this:
 `Settle room+tax to VI0000.,C. Chapel`  
 `"This guest is clearly crazy, so be careful.",L. McCoy`  
 Here the first column contains the comment text while the second column contains the authors for the first columns' comments. This could be configured thusly:  
-`#TYPE Front Office, 0, 1`
+`#TYPE Reservation, 0, 1`
 
 This is an example of a file with several comment types:  
 `Req extra pillows,Obtain guest card for incidentals,H. Seldon,This guy's dog is so cute!`  
